@@ -23,7 +23,9 @@ class Colormap(colors.ListedColormap):
 class Work:
     def __init__(self,filename):
         self.path = os.path.join('ncar_colormaps',filename+'.rgb')
+        self.filename = filename
         self.rgb = None
+        self.colors = None
     def open_file(self):
         file = open(self.path)
         data=file.readlines()
@@ -34,9 +36,9 @@ class Work:
             self.rgb[i][1]=data[i].strip().split(' ')[1]
             self.rgb[i][2]=data[i].strip().split(' ')[2]
         return self.rgb 
-    def __call__(self):
-        print("666")
-        self.open_file()
+#    def __call__(self):
+#        print("666")
+#        self.open_file()
 
 class Submap(Work):
     def __init__(self,filename,subl):
@@ -45,11 +47,11 @@ class Submap(Work):
     def sublist(self):
         self.rgb = self.open_file()
         n = len(self.l)
-        colors = np.zeros((n,3))
+        self.colors = np.zeros((n,3))
         for i in range(n):
             j = self.l[i]
-            colors[i]=self.rgb[j]
-        return colors
+            self.colors[i]=self.rgb[j]
+        return self.colors
 
 def show():
     pass
