@@ -1,4 +1,5 @@
-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # this is the installed rgb 
 INSTALL_RGB = [
 'MPL_Greys.rgb', 
@@ -241,6 +242,9 @@ INSTALL_RGB = [
 'GMT_red2green.rgb', 
 'hotres.rgb', 
 'MPL_hot.rgb', 
-'precip4_11lev.rgb']
+'precip4_11lev.rgb',]
 
+def outlistrgb(filelist = INSTALL_RGB):
+    for file in filelist:
+        print(str(file))
 

@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib import colors
 import os 
 
-# 将列表编程可以迭代的cmaps
+# 将列表变成可以迭代的cmaps
 class Colormap(colors.ListedColormap):
     def __init__(self, c, name='from_list', n=None):
         '''Initialization'''
@@ -19,29 +19,31 @@ class Colormap(colors.ListedColormap):
         return Colormap(self._colors[item], name='sliced_' + self._name)
 
 
-# 工厂函数，根据
+# 工厂函数，根据file 产生对应的rgb列表
 class Work:
     def __init__(self,filename):
-        self.path = os.path.join('ncar_colormaps',filename+'.rgb')
+        self.absfile = os.path.dirname(os.path.abspath(__file__))
+        self.path = os.path.join(self.absfile,'ncar_colormaps',filename+'.rgb')
         self.filename = filename
         self.rgb = None
         self.colors = None
+        self.number = 0
     def open_file(self):
         file = open(self.path)
         data=file.readlines()
         n=len(data)
+        self.number = n
         self.rgb=np.zeros((n,3))
         for i in np.arange(n):
             self.rgb[i][0]=data[i].strip().split(' ')[0]
             self.rgb[i][1]=data[i].strip().split(' ')[1]
             self.rgb[i][2]=data[i].strip().split(' ')[2]
         return self.rgb 
-#    def __call__(self):
-#        print("666")
-#        self.open_file()
 
+# 根据自定义的列表将原rgb文件中对应的颜色值映射到新的rgb列表中
+# 添加了默认的配置项，使用默认的ncl_ffault 调色板,并默认产生前十号颜色的文件
 class Submap(Work):
-    def __init__(self,filename,subl):
+    def __init__(self,filename='ncl_default',subl=[i for i in range(10)]):
         super().__init__(filename)
         self.l=subl
     def sublist(self):
@@ -53,13 +55,11 @@ class Submap(Work):
             self.colors[i]=self.rgb[j]
         return self.colors
 
-def show():
-    pass
 
 if __name__=='__main__':
     print("factory is being run directly")
     # product full rgb list based on rgbfile
-    #print(Work('ncl_default').open_file())
+    print(Work('ncl_default').open_file())
 
 
     # product sublist file based on rgbfile and list item
@@ -70,23 +70,3 @@ if __name__=='__main__':
     #a=Work('ncl_default')
     #a()
 
-## ncmaps(ncl_default,list)
-
-## 产生一个新的map
-
-## ncmaps(ncl_default,list).show()
-
-## 绘制一个map地图
-
-
-## Colormap的作用
-
-# 两个类 
-
-# 1 cmaps 的colormap 
-## 用来装饰转换好的rgb文件
-
-# 2 读取已有的文件，讲rgb文件转化成列表
-
-## 1. 读取rgb文件并转换成数组
-## 2. 将rgb文件转换成
