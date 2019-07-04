@@ -39,9 +39,9 @@ import os
 #print(a)
 l=[i for i in range(5)]
 #print(l)
-#Cmaps('ncl_default',l).show()
+Cmaps('ncl_default',l).show()
 #a=Cmaps('ncl_default',l).__str__()
-print(Cmaps('ncl_default',l))
+#print(Cmaps('ncl_default',l))
 #Cmaps('ncl_default',l).show()
 #a=Cmaps().show()
 #print(12**0.5)
